@@ -38,4 +38,20 @@ typedef struct  s_flag
 	unsigned char f : 1;
 }               t_flag;
 
+typedef struct  s_dro
+{
+	int     dx;
+	int     dy;
+	int     error;
+	int     ystep;
+	int     y;
+	int     x;
+}               t_dro;
+
+void        dro_line(t_coords coords, void *param);
+void        init_coords(t_coords *coords);
+int         line(int mouse, int x, int y, void *param);
+int         check_coords(t_coords *coords);
+int			deal_key(int key, void *param);
+
 #endif

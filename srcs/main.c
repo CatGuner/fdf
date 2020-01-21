@@ -12,8 +12,6 @@
 
 #include "../includes/fdf.h"
 
-void         dro_line(t_coords coords, void *param);
-
 void        init_coords(t_coords *coords)
 {
 	coords->x0 = -1;
@@ -46,46 +44,49 @@ int         line(int mouse, int x, int y, void *param)
 	return (0);
 }
 
+int         check_coords(t_coords *coords)
+{
+	int     step;
+
+	step = abs(coords->y1 - coords->y0) > abs(coords->x1 - coords->x0);
+	if (step)
+	{
+		ft_swap(&coords->x0, &coords->y0);
+		ft_swap(&coords->x1, &coords->y1);
+	}
+	if (coords->x0 > coords->x1)
+	{
+		ft_swap(&coords->x0, &coords->x1);
+		ft_swap(&coords->y0, &coords->y1);
+	}
+	return (step);
+}
+
 void         dro_line(t_coords coords, void *param)
 {
 	int     step;
-	int     dx;
-	int     dy;
-	int     error;
-	int     ystep;
-	int     y;
-	int     x;
+	t_dro   dro;
 
-	step = abs(coords.y1 - coords.y0) > abs(coords.x1 - coords.x0);
-	if (step)
-	{
-		ft_swap(&coords.x0, &coords.y0);
-		ft_swap(&coords.x1, &coords.y1);
-	}
-	if (coords.x0 > coords.x1)
-	{
-		ft_swap(&coords.x0, &coords.x1);
-		ft_swap(&coords.y0, &coords.y1);
-	}
-	dx = coords.x1 - coords.x0;
-	dy = abs(coords.y1 - coords.y0);
-	error = dx / 2;
-	ystep = (coords.y0 < coords.y1) ? 1 : -1;
-	y = coords.y0;
-	x = coords.x0;
-	while (x <= coords.x1)
+	step = check_coords(&coords);
+	dro.dx = coords.x1 - coords.x0;
+	dro.dy = abs(coords.y1 - coords.y0);
+	dro.error = dro.dx / 2;
+	dro.ystep = (coords.y0 < coords.y1) ? 1 : -1;
+	dro.y = coords.y0;
+	dro.x = coords.x0;
+	while (dro.x <= coords.x1)
 	{
 		if (step)
-			mlx_pixel_put(param, param, y, x, 0xFFFFFF);
+			mlx_pixel_put(param, param, dro.y, dro.x, 0xFFFFFF);
 		else
-			mlx_pixel_put(param, param, x, y, 0xFFFFFF);
-			error -= dy;
-			if (error < 0)
-			{
-				y += ystep;
-				error += dx;
-			}
-			x++;
+			mlx_pixel_put(param, param, dro.x, dro.y, 0xFFFFFF);
+		dro.error -= dro.dy;
+		if (dro.error < 0)
+		{
+			dro.y += dro.ystep;
+			dro.error += dro.dx;
+		}
+		dro.x++;
 	}
 
 }
