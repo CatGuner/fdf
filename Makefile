@@ -6,7 +6,7 @@
 #    By: rofeldsp <rofeldsp@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/27 13:14:43 by rofeldsp          #+#    #+#              #
-#    Updated: 2020/01/17 22:01:22 by atammie          ###   ########.fr        #
+#    Updated: 2020/01/21 16:54:57 by atammie          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ $(NAME):
 	mkdir -p $(OBJ_DIR)
 	@$(MAKE) -C $(LIB_DIR)
 	@$(MAKE) $(OBJ)
-	gcc  $(OBJ) -L$(LIB_DIR)/ -L$(MLX_DIR)/ -lmlx -framework OpenGL -framework AppKit -I$(INC_DIR)/ -I$(LIB_DIR)/ -o $(NAME)
+	gcc  $(OBJ) -L$(LIB_DIR) -lft -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit -I$(INC_DIR) -I$(LIB_DIR) -o $(NAME)
 
 $(OBJ_DIR)/%.o:$(SRC_DIR)/%.c
 	gcc  -I$(INC_DIR) -I$(LIB_DIR) -o $@ -c $<

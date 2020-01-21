@@ -6,7 +6,7 @@
 #    By: atammie <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/17 19:01:16 by atammie           #+#    #+#              #
-#    Updated: 2019/09/20 17:37:43 by atammie          ###   ########.fr        #
+#    Updated: 2020/01/21 20:50:53 by atammie          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,11 +20,11 @@ NAME=libft.a
 all: $(NAME)
 
 $(NAME): $(OFILES)
-	ar rc $(NAME) $(OFILES)
+	@ar rc $(NAME) $(OFILES)
 	ranlib $(NAME)
 
 $(OFILES): %.o : %.c
-	gcc -c $(MASKS) -I. $<
+	@gcc -c $(MASKS) -I. $<
 
 clean:
 	/bin/rm -f $(OFILES)

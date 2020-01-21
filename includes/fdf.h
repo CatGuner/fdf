@@ -17,11 +17,25 @@
 #include <stdio.h>
 #include "libft.h"
 #include "../libft/libft.h"
+#include <math.h>
 
 typedef struct	s_window
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
 }				t_win;
+
+typedef struct  s_coords
+{
+	int     x1;
+	int     y1;
+	int     x0;
+	int     y0;
+}               t_coords;
+
+typedef struct  s_flag
+{
+	unsigned char f : 1;
+}               t_flag;
 
 #endif
