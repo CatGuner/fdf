@@ -15,6 +15,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <string.h>
+# define BUFF_SIZE  900
+# include <fcntl.h>
 
 typedef struct		s_list
 {
@@ -22,6 +24,9 @@ typedef struct		s_list
 	size_t			content_size;
 	struct s_list	*next;
 }					t_list;
+
+int                 get_next_line(const int fd, char **line);
+
 
 void				ft_putchar(unsigned char c);
 void				ft_putstr(const char *str);

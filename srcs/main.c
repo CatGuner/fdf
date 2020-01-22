@@ -102,17 +102,32 @@ int			deal_key(int key, void *param)
 
 }
 
-int			main()
+int			main(int ac, char **av)
 {
-	t_win win1;
-	void **param;
+	t_fdf   win1;
+	void    *param;
+	int     fd;
 
-	win1.mlx_ptr = mlx_init();
-	win1.win_ptr = mlx_new_window(win1.mlx_ptr, 1920, 1080, "FDF");
-	mlx_key_hook(win1.win_ptr, deal_key, (void *)0);
-	param = ft_memalloc(sizeof(void *) * 2);
-	param[0] = win1.win_ptr;
-	param[1] = win1.mlx_ptr;
-	mlx_mouse_hook(win1.win_ptr, line, *param);
-	mlx_loop(win1.mlx_ptr);
+	fd = 0;
+	if (ac == 2)
+	{
+		if (!(fd = open(av[1], O_RDONLY)))
+			print_error();
+		read_file(fd, &(win1.map));
+		//ft_putstr(win1.map);
+	//	set_sizes(&win1);
+//		ft_putstr(" w ");
+		//ft_putnbr(win1.wight);
+
+	//	ft_putstr(" l ");
+	//	ft_putnbr(win1.length);
+
+		win1.mlx_ptr = mlx_init();
+		win1.win_ptr = mlx_new_window(win1.mlx_ptr, 1920, 1080, "FDF");
+		mlx_key_hook(win1.win_ptr, deal_key, (void *) 0);
+		param = ft_memalloc(sizeof(void *) * 2);
+		param = win1.win_ptr;
+		mlx_mouse_hook(win1.win_ptr, line, param);
+		mlx_loop(win1.mlx_ptr);
+	}
 }

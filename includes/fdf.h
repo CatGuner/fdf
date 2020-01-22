@@ -18,12 +18,17 @@
 #include "libft.h"
 #include "../libft/libft.h"
 #include <math.h>
+#include "get_next_line.h"
 
-typedef struct	s_window
+typedef struct	s_fdf
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
-}				t_win;
+	char    *map;
+	int     **imap;
+	int     length;
+	int     wight;
+}				t_fdf;
 
 typedef struct  s_coords
 {
@@ -53,5 +58,9 @@ void        init_coords(t_coords *coords);
 int         line(int mouse, int x, int y, void *param);
 int         check_coords(t_coords *coords);
 int			deal_key(int key, void *param);
+void        print_error();
+int			get_next_line(const int fd, char **line);
+void        set_sizes(t_fdf *win);
+void        read_file(int fd, char **tmp);
 
 #endif
