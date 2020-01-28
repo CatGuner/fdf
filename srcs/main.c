@@ -113,8 +113,9 @@ int			main(int ac, char **av)
 	{
 		if (!(fd = open(av[1], O_RDONLY)))
 			print_error();
+		win1.map = NULL;
 		read_file(fd, &(win1.map));
-		//ft_putstr(win1.map);
+		ft_putstr(win1.map);
 	//	set_sizes(&win1);
 //		ft_putstr(" w ");
 		//ft_putnbr(win1.wight);

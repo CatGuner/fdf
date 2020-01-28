@@ -41,9 +41,17 @@ void        set_sizes(t_fdf *win)
 
 void        read_file(int fd, char **tmp)
 {
-	while ((get_next_line(fd, tmp)) > 0) {
-		ft_putstr(*tmp);
-		continue;
+	char    *ptr;
+	char    *str;
+	char    *dtr;
+
+	str = ft_strnew(0);
+	while ((get_next_line(fd, &ptr)) > 0)
+	{
+		ft_strcat(ptr, "\n");
+		str = ft_strjoin(str, ptr);
 	}
+	printf("%s", str );
+
 
 }
