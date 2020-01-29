@@ -12,7 +12,7 @@
 
 # ifndef FDF_H
 # define FDF_H
-#include "mlx.h"
+#include "../minilibx_macos/mlx.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include "libft.h"
@@ -27,7 +27,7 @@ typedef struct	s_fdf
 	char    *map;
 	int     **imap;
 	int     length;
-	int     wight;
+	int     width;
 }				t_fdf;
 
 typedef struct  s_coords
@@ -60,7 +60,7 @@ int         check_coords(t_coords *coords);
 int			deal_key(int key, void *param);
 void        print_error();
 int			get_next_line(const int fd, char **line);
-void        set_sizes(t_fdf *win);
-void        read_file(int fd, char **tmp);
+int         set_length(char *str);
+void        read_file(int fd, t_fdf *win);
 
 #endif

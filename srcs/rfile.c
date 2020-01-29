@@ -12,46 +12,60 @@
 
 #include "../includes/fdf.h"
 
-void        set_sizes(t_fdf *win)
-{
-	int     max;
-	int     i;
-	char    *tmp;
 
-	tmp = win->map;
-	ft_putstr(tmp);
-	i = 0;
-	max = 0;
-	while (*tmp != '\0')
-	{
-		while (*tmp != '\n' || *tmp != '\0')
-		{
-			max++;
-			tmp++;
-		}
-		if (i == 0)
-			win->length = max;
-		else if (max != win->length)
-			print_error();
-		i++;
-		tmp++;
-	}
-	win->wight = i;
-}
-
-void        read_file(int fd, char **tmp)
+void        read_file(int fd, t_fdf *win)
 {
 	char    *ptr;
-	char    *str;
-	char    *dtr;
+	char    *tmp;
 
-	str = ft_strnew(0);
+
+	tmp = ft_strnew(0);
+	win->width = 0;
 	while ((get_next_line(fd, &ptr)) > 0)
 	{
 		ft_strcat(ptr, "\n");
-		str = ft_strjoin(str, ptr);
+		win->width++;
+		tmp = ft_strjoin(tmp, ptr);
 	}
-	printf("%s", str );
-
-
+	win->map = tmp;
 }
+
+int         set_length(char *str)
+{
+    int     count;
+    int     ic;
+
+    ic = 0;
+    count = 0;
+    while (*str != '\0')
+    {
+        while ((ft_isdigit(*str)) || *str == '-')
+            str++;
+        count++;
+        while (*str != '\0' && (*str == ' ' || *str == '\t'))
+            str++;
+        if (*str == '\n')
+        {
+            if (ic != 0 && ic != count)
+                print_error();
+            ic = count;
+            count = 0;
+        }
+        str++;
+    }
+    return (ic);
+}
+
+
+//int         **all_atoi(t_fdf *win)
+//{
+//    int     **intMap;
+//    int     x;
+//    int     y;
+//
+//    x = 0;
+//    intMap = (int**)malloc(sizeof(int*) * (win->width + 1));
+//    intMap[win->width + 1] = NULL;
+//    while
+//
+//}

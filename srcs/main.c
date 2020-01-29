@@ -107,6 +107,7 @@ int			main(int ac, char **av)
 	t_fdf   win1;
 	void    *param;
 	int     fd;
+	char    **strMap;
 
 	fd = 0;
 	if (ac == 2)
@@ -114,14 +115,11 @@ int			main(int ac, char **av)
 		if (!(fd = open(av[1], O_RDONLY)))
 			print_error();
 		win1.map = NULL;
-		read_file(fd, &(win1.map));
-		ft_putstr(win1.map);
-	//	set_sizes(&win1);
-//		ft_putstr(" w ");
-		//ft_putnbr(win1.wight);
+		read_file(fd, &win1);
+	//	printf("%s", win1.map);
+		printf("|%i|", set_length(win1.map));
 
-	//	ft_putstr(" l ");
-	//	ft_putnbr(win1.length);
+
 
 		win1.mlx_ptr = mlx_init();
 		win1.win_ptr = mlx_new_window(win1.mlx_ptr, 1920, 1080, "FDF");
