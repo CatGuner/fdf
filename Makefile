@@ -22,6 +22,7 @@ MLX_DIR	:= ./minilibx_macos
 SRC =   main.c \
         errors.c \
         rfile.c \
+        drow.c
 
 
 OBJ		:= $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))

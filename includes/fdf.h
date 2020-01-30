@@ -38,6 +38,12 @@ typedef struct  s_coords
 	int     y0;
 }               t_coords;
 
+typedef struct  s_size
+{
+	int     z;
+	int     step;
+}               t_size;
+
 typedef struct  s_flag
 {
 	unsigned char f : 1;
@@ -53,14 +59,23 @@ typedef struct  s_dro
 	int     x;
 }               t_dro;
 
-void        dro_line(t_coords coords, void *param);
+typedef struct  s_im
+{
+	int     xcent;
+	int     ycent;
+	void    *img_ptr;
+
+}               t_im;
+
+void        dro_line(t_coords coords, t_fdf *param);
 void        init_coords(t_coords *coords);
-int         line(int mouse, int x, int y, void *param);
+int         line(int mouse, int x, int y, t_fdf *param);
 int         check_coords(t_coords *coords);
 int			deal_key(int key, void *param);
 void        print_error();
 int			get_next_line(const int fd, char **line);
 int         set_length(char *str);
 void        read_file(int fd, t_fdf *win);
+int         **all_atoi(t_fdf *win);
 
 #endif

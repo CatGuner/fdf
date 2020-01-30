@@ -57,15 +57,31 @@ int         set_length(char *str)
 }
 
 
-//int         **all_atoi(t_fdf *win)
-//{
-//    int     **intMap;
-//    int     x;
-//    int     y;
-//
-//    x = 0;
-//    intMap = (int**)malloc(sizeof(int*) * (win->width + 1));
-//    intMap[win->width + 1] = NULL;
-//    while
-//
-//}
+int         **all_atoi(t_fdf *win)
+{
+    int     **intMap;
+    int     x;
+    int     y;
+    char    *tmp;
+
+    y = 0;
+    tmp = win->map;
+    intMap = (int**)malloc(sizeof(int*) * (win->width + 1));
+    intMap[win->width + 1] = NULL;
+    while (y != win->width)
+    {
+    	intMap[y] = (int*)malloc(sizeof(int) * win->length);
+    	x = 0;
+    	while (x != win->length)
+	    {
+    		while (*tmp != '\0' && (!ft_isdigit(*tmp) && *tmp != '-'))
+			    tmp++;
+		    intMap[y][x] = (ft_atoi(tmp));
+		    while (*tmp != '\0' && (ft_isdigit(*tmp) || *tmp == '-'))
+		    	tmp++;
+    		x++;
+	    }
+    	y++;
+    }
+    return(intMap);
+}
