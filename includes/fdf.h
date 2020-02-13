@@ -48,10 +48,10 @@ typedef struct	s_fdf
 
 typedef struct  s_coords
 {
-	int     x1;
-	int     y1;
-	int     x0;
-	int     y0;
+	int     x;
+	int     y;
+	int     z;
+	int     color;
 }               t_coords;
 
 typedef struct  s_size
@@ -75,7 +75,7 @@ typedef struct  s_dro
 	int     x;
 }               t_dro;
 
-void        dro_line(t_coords coords, t_fdf *param);
+static void        dro_line(t_coords coords, t_fdf *param);
 void        init_coords(t_coords *coords);
 int         line(int mouse, int x, int y, t_fdf *param);
 int         check_coords(t_coords *coords);
@@ -86,5 +86,7 @@ int         set_length(char *str);
 void        read_file(int fd, t_fdf *win);
 int         **all_atoi(t_fdf *win);
 void		InitImg(t_im *im, void* mlx_ptr);
+static void	put_pixel(t_fdf *fdf, int x, int y, int color);
+void        dro(t_fdf *param);
 
 #endif

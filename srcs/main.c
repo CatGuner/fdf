@@ -54,9 +54,9 @@ int			main(int ac, char **av)
 		mlx_key_hook(win1.win_ptr, deal_key, (void *) 0);
 //		param = &win1;
 		InitImg(&win1.img, win1.mlx_ptr);
-		win1.img.img_data = mlx_get_data_addr(win1.img.img_ptr, &win1.img.bit_per_pixel, &win1.img.size_line, &win1.img.endian);
-		mlx_put_image_to_window(win1.mlx_ptr, win1.win_ptr, win1.img.img_ptr, 1000, 1000);
-		mlx_mouse_hook(win1.win_ptr, line, &win1);
+		dro(&win1);
+		//mlx_put_image_to_window(win1.mlx_ptr, win1.win_ptr, win1.img.img_ptr, 1000, 1000);
+	//	mlx_mouse_hook(win1.win_ptr, line, &win1);
 		mlx_loop(win1.mlx_ptr);
 	}
 }
