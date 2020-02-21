@@ -25,15 +25,26 @@ typedef struct  s_im
 	int		xcent;
 	int		ycent;
 	void	*img_ptr;
-	int		r;
-	int		g;
-	int		b;
+	int		color[3];
+	int     w_size;
+	int     h_size;
 	int		alpha;
 	int		bit_per_pixel;
 	int		size_line;
 	int		endian;
 	char    *img_data;
 }               t_im;
+
+typedef struct  s_map
+{
+	int			width;
+	int			height;
+	int			*coords_arr;
+	int			*colors_arr;
+	int			z_min;
+	int			z_max;
+	int			z_range;
+}               t_map;
 
 typedef struct	s_fdf
 {
@@ -65,17 +76,8 @@ typedef struct  s_flag
 	unsigned char f : 1;
 }               t_flag;
 
-typedef struct  s_dro
-{
-	int     dx;
-	int     dy;
-	int     error;
-	int     ystep;
-	int     y;
-	int     x;
-}               t_dro;
 
-static void        dro_line(t_coords coords, t_fdf *param);
+void        dro_line (t_coords fst, t_coords snd, t_fdf* fdf);
 void        init_coords(t_coords *coords);
 int         line(int mouse, int x, int y, t_fdf *param);
 int         check_coords(t_coords *coords);
@@ -87,6 +89,8 @@ void        read_file(int fd, t_fdf *win);
 int         **all_atoi(t_fdf *win);
 void		InitImg(t_im *im, void* mlx_ptr);
 static void	put_pixel(t_fdf *fdf, int x, int y, int color);
-void        dro(t_fdf *param);
+void        dro(t_fdf* win);
+t_coords    get_couple_coords (int x, int y);
+
 
 #endif

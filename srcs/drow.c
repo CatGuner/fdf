@@ -1,18 +1,5 @@
 #include "../includes/fdf.h"
 
-t_coords    new_point(int x, int y, t_map *map)
-{
-	t_coords	point;
-	int		index;
-
-	index = get_index(x, y, map->width);
-	point.x = x;
-	point.y = y;
-	point.z = map->coords_arr[index];
-	point.color = (map->colors_arr[index] == -1) ?
-	              get_default_color(point.z, map) : map->colors_arr[index];
-	return (point);
-}
 
 static void	put_pixel(t_fdf *fdf, int x, int y, int color)
 {
@@ -22,86 +9,76 @@ static void	put_pixel(t_fdf *fdf, int x, int y, int color)
 	{
 		i = (x * fdf->img.bit_per_pixel / 8) + (y * fdf->img.size_line);
 		fdf->img.img_data[i] = color;
-		fdf->img.img_data[++i] = color >> 8;
-		fdf->img.img_data[++i] = color >> 16;
+		fdf->img.img_data[++i] = color;
+		fdf->img.img_data[++i] = color;
 	}
 }
 
-int         line(int mouse, int x, int y, t_fdf *param)
+void        dro_line (t_coords fst, t_coords snd, t_fdf* fdf)
 {
-	static t_coords     coords;
-	static t_flag       flag;
+	t_coords    delta;
+	t_coords    sign;
+	t_coords    cure;
+	int         error[2];
 
-	if (mouse && flag.f == 0)
+	fst.x = fst.x * 20 + 200;
+	fst.y = fst.y * 20 + 200;
+	snd.x = snd.x * 20 + 200;
+	snd.y = snd.y * 20 + 200;
+	delta.x = abs(fst.x - snd.x);
+	delta.y = abs(fst.y - snd.y);
+	sign.x = fst.x < snd.x ? 1 : -1;
+	sign.y = fst.y < snd.y ? 1 : -1;
+	error[0] = delta.x - delta.y;
+	cure = fst;
+	while (cure.x != snd.x || cure.y != snd.y)
 	{
-		coords.x0 = x;
-		coords.y0 = y;
-		flag.f = 1;
+		put_pixel(fdf, cure.x, cure.y, 0xFFFFFF);
+		if ((error[1] = error[0] * 2) > -delta.y)
+		{
+			error[0] -= delta.y;
+			cure.x += sign.x;
+		}
+		if (error[1] < delta.x)
+		{
+			error[0] += delta.x;
+			cure.y += sign.y;
+		}
 	}
-	else if (mouse && flag.f == 1)
-	{
-		coords.x1 = x;
-		coords.y1 = y;
-		flag.f = 0;
-		dro_line (coords, param);
-	}
-	return (0);
 }
 
-int         check_coords(t_coords *coords)
+t_coords    get_couple_coords (int x, int y)
 {
-	int     step;
+	t_coords point;
 
-	step = abs(coords->y1 - coords->y0) > abs(coords->x1 - coords->x0);
-	if (step)
-	{
-		ft_swap(&coords->x0, &coords->y0);
-		ft_swap(&coords->x1, &coords->y1);
-	}
-	if (coords->x0 > coords->x1)
-	{
-		ft_swap(&coords->x0, &coords->x1);
-		ft_swap(&coords->y0, &coords->y1);
-	}
-	return (step);
+	point.x = x;
+	point.y = y;
+
+	return (point);
 }
 
-static void         dro_line(t_coords coords, t_fdf *param)
+void        dro(t_fdf* win)
 {
-	int error[2];
-
-}
-
-void        dro(t_fdf *param){
-	int **cs = param->imap;
-	int x;
-	int y;
-	t_coords coords;
+	int		x;
+	int		y;
 
 	y = 0;
-	ft_putchar('j');
-	while (y != param->length){
+	while (y < win->length)
+	{
 		x = 0;
-		while (x != param->width){
-			if (x != param->length - 1){
-				coords.x0 = x;
-				coords.x1 = (x + 1);
-				coords.y0 = y;
-				coords.y1 = y + 1;
-				dro_line(coords, param);
-			}
-			if (y != param->width - 1){
-				coords.y0 = x;
-				coords.y1 = (x + 1);
-				coords.x0 = y;
-				coords.x1 = y + 1;
-				dro_line(coords, param);
-			}
+		while (x < win->width)
+		{
+			if (x != win->width - 1)
+				dro_line(get_couple_coords(x, y), get_couple_coords(x + 1, y), win);
+
+			if (y != win->length - 1)
+				dro_line(get_couple_coords(x, y), get_couple_coords(x, y + 1), win);
 			x++;
 		}
+		ft_putchar('\n');
 		y++;
 	}
-	mlx_put_image_to_window(param->mlx_ptr, param->win_ptr, param->img.img_ptr, 0, 0);
+	mlx_put_image_to_window(win->mlx_ptr, win->win_ptr, win->img.img_ptr, 0, 0);
 }
 
 int			deal_key(int key, void *param)

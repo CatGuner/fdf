@@ -32,7 +32,9 @@ int			main(int ac, char **av)
 		read_file(fd, &win1);
 	//	printf("%s", win1.map);
 		win1.length = set_length(win1.map);
-		win1.imap = all_atoi(&win1);
+		win1.imap = all_atoi(&win1); //переводим карту в интовую матрицу
+
+		// проверка на правильность перевода в int
 		while (i != win1.width)
 		{
 			j = 0;
@@ -44,18 +46,14 @@ int			main(int ac, char **av)
 			printf("\n");
 			i++;
 		}
-		gh.step = 20;
-		gh.z = 10;
-
 
 
 		win1.mlx_ptr = mlx_init();
 		win1.win_ptr = mlx_new_window(win1.mlx_ptr, 1920, 1080, "FDF");
 		mlx_key_hook(win1.win_ptr, deal_key, (void *) 0);
-//		param = &win1;
 		InitImg(&win1.img, win1.mlx_ptr);
 		dro(&win1);
-		//mlx_put_image_to_window(win1.mlx_ptr, win1.win_ptr, win1.img.img_ptr, 1000, 1000);
+
 	//	mlx_mouse_hook(win1.win_ptr, line, &win1);
 		mlx_loop(win1.mlx_ptr);
 	}
