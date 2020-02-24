@@ -12,18 +12,20 @@
 
 #include "../includes/fdf.h"
 
-void InitImg(t_im* im, void* mlx_ptr)
+void InitImg(t_fdf* fdf)
 {
-	im->color[0] = 255;
-	im->color[1] = 255;
-	im->color[2] = 255;
-	im->xcent = 590;
-	im->ycent = 240;
-	im->bit_per_pixel = 32;
-	im->size_line = 3200;
-	im->endian = 1;
-	im->w_size = 800;
-	im->h_size = 600;
-	im->img_ptr = mlx_new_image(mlx_ptr, im->w_size, im->h_size);
-	im->img_data = mlx_get_data_addr(im->img_ptr, &im->bit_per_pixel, &im->size_line, &im->endian);
+	fdf->img.color[0] = 255;
+	fdf->img.color[1] = 255;
+	fdf->img.color[2] = 255;
+	fdf->img.bit_per_pixel = 32;
+	fdf->img.size_line = 3200;
+	fdf->img.endian = 1;
+	fdf->img.w_size = 1920;
+	fdf->img.h_size = 1080;
+	fdf->camera.zoom = 20;
+	fdf->camera.projection.f = 0;
+	fdf->img.xcent = (1920 - fdf->camera.zoom * fdf->camera.zoom) / 2;
+	fdf->img.ycent = (1080 - fdf->camera.zoom * fdf->camera.zoom) / 2;
+	fdf->img.img_ptr = mlx_new_image(fdf->mlx_ptr, fdf->img.w_size, fdf->img.h_size);
+	fdf->img.img_data = mlx_get_data_addr(fdf->img.img_ptr, &fdf->img.bit_per_pixel, &fdf->img.size_line, &fdf->img.endian);
 }

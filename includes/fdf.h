@@ -20,20 +20,36 @@
 #include <math.h>
 #include "get_next_line.h"
 
+typedef struct  s_flag
+{
+	unsigned char f : 1;
+}               t_flag;
+
+
 typedef struct  s_im
 {
-	int		xcent;
-	int		ycent;
-	void	*img_ptr;
-	int		color[3];
-	int     w_size;
-	int     h_size;
-	int		alpha;
-	int		bit_per_pixel;
-	int		size_line;
-	int		endian;
-	char    *img_data;
+	int		    xcent;
+	int		    ycent;
+	void	    *img_ptr;
+	int		    color[3];
+	int         w_size;
+	int         h_size;
+	int		    alpha;
+	int		    bit_per_pixel;
+	int		    size_line;
+	int		    endian;
+	char        *img_data;
 }               t_im;
+
+typedef struct s_camera
+{
+	t_flag projection; // iso = 1, 2d = 0;
+	int         zoom;
+	double      alpha;
+	double      beta;
+	double      gamma;
+	float       z_dev;
+}               t_camera;
 
 typedef struct  s_map
 {
@@ -48,49 +64,52 @@ typedef struct  s_map
 
 typedef struct	s_fdf
 {
-	void	*mlx_ptr;
-	void	*win_ptr;
-	char	*map;
-	t_im	img;
-	int		**imap;
-	int		length;
-	int		width;
+	void	    *mlx_ptr;
+	void	    *win_ptr;
+	char	    *map;
+	t_im	    img;
+	t_camera    camera;
+	int		    **imap;
+	int		    length;
+	int		    width;
 }				t_fdf;
 
 typedef struct  s_coords
 {
-	int     x;
-	int     y;
-	int     z;
-	int     color;
+	int         x;
+	int         y;
+	int         z;
+	int         color;
 }               t_coords;
 
 typedef struct  s_size
 {
-	int     z;
-	int     step;
+	int         z;
+	int         step;
 }               t_size;
 
-typedef struct  s_flag
-{
-	unsigned char f : 1;
-}               t_flag;
 
 
 void        dro_line (t_coords fst, t_coords snd, t_fdf* fdf);
 void        init_coords(t_coords *coords);
 int         line(int mouse, int x, int y, t_fdf *param);
 int         check_coords(t_coords *coords);
-int			deal_key(int key, void *param);
+int			setup_controls (t_fdf *param);
 void        print_error();
 int			get_next_line(const int fd, char **line);
 int         set_length(char *str);
 void        read_file(int fd, t_fdf *win);
 int         **all_atoi(t_fdf *win);
-void		InitImg(t_im *im, void* mlx_ptr);
+void		InitImg(t_fdf *fdf);
 static void	put_pixel(t_fdf *fdf, int x, int y, int color);
 void        dro(t_fdf* win);
 t_coords    get_couple_coords (int x, int y);
+static void clean_im(t_fdf *fdf, int c);
+int         key_press (int keycode, void *param);
+int         key_release (int keycode, t_fdf *param);
+void        zoom(int key, t_fdf *fdf);
+static void iso(int *x, int *y, int z);
+void        choose_projection(t_fdf *fdf, int key);
 
 
 #endif

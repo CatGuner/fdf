@@ -5,7 +5,7 @@ static void	put_pixel(t_fdf *fdf, int x, int y, int color)
 {
 	int		i;
 
-	if (x >= 0 && x < 800 && y >= 0 && y < 600)
+	if (x >= 0 && x < fdf->img.w_size && y >= 0 && y < fdf->img.h_size)
 	{
 		i = (x * fdf->img.bit_per_pixel / 8) + (y * fdf->img.size_line);
 		fdf->img.img_data[i] = color;
@@ -21,10 +21,10 @@ void        dro_line (t_coords fst, t_coords snd, t_fdf* fdf)
 	t_coords    cure;
 	int         error[2];
 
-	fst.x = fst.x * 20 + 200;
-	fst.y = fst.y * 20 + 200;
-	snd.x = snd.x * 20 + 200;
-	snd.y = snd.y * 20 + 200;
+	fst.x = fst.x * fdf->camera.zoom + fdf->img.xcent;
+	fst.y = fst.y * fdf->camera.zoom + fdf->img.ycent;
+	snd.x = snd.x * fdf->camera.zoom + fdf->img.xcent;
+	snd.y = snd.y * fdf->camera.zoom + fdf->img.ycent;
 	delta.x = abs(fst.x - snd.x);
 	delta.y = abs(fst.y - snd.y);
 	sign.x = fst.x < snd.x ? 1 : -1;
@@ -63,6 +63,7 @@ void        dro(t_fdf* win)
 	int		y;
 
 	y = 0;
+	clean_im(win, 0);
 	while (y < win->length)
 	{
 		x = 0;
@@ -75,17 +76,37 @@ void        dro(t_fdf* win)
 				dro_line(get_couple_coords(x, y), get_couple_coords(x, y + 1), win);
 			x++;
 		}
-		ft_putchar('\n');
 		y++;
 	}
 	mlx_put_image_to_window(win->mlx_ptr, win->win_ptr, win->img.img_ptr, 0, 0);
 }
 
-int			deal_key(int key, void *param)
+static void	clean_im(t_fdf *fdf, int c)
 {
-	if (key == 53)
-		exit (0);
-	return(0);
+	int	*image;
+	int	i;
+
+	ft_bzero(fdf->img.img_data, fdf->img.w_size * fdf->img.h_size * (fdf->img.bit_per_pixel / 8));
+	i = 0;
+	image = (int *)fdf->img.img_data;
+	while (i < fdf->img.w_size * fdf->img.h_size)
+	{
+		image[i] = c;
+		i++;
+	}
+}
+
+
+
+static void iso(int *x, int *y, int z)
+{
+	int previous_x;
+	int previous_y;
+
+	previous_x = *x;
+	previous_y = *y;
+	*x = (previous_x - previous_y) * cos(0.523599);
+	*y = -z + (previous_x + previous_y) * sin(0.523599);
 }
 
 
