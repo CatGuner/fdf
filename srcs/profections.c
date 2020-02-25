@@ -53,7 +53,7 @@ static void iso(int *x, int *y, int z)
 t_coords projection(t_coords c, t_fdf *fdf){
 	c.x = c.x * fdf->camera.zoom;
 	c.y = c.y * fdf->camera.zoom;
-	c.z = c.z * fdf->camera.zoom;
+	c.z = c.z * fdf->camera.zoom * fdf->camera.z_dev;
 	rotate_x(&c.y, &c.z, fdf->camera.alpha);
 	rotate_y(&c.x, &c.z, fdf->camera.beta);
 	rotate_z(&c.x, &c.y, fdf->camera.gamma);

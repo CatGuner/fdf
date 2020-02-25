@@ -9,6 +9,8 @@ static void	put_pixel(t_fdf *fdf, int x, int y, int color)
 	{
 		i = (x * fdf->img.bit_per_pixel / 8) + (y * fdf->img.size_line);
 		fdf->img.img_data[i] = color;
+		fdf->img.img_data[++i] = color;
+		fdf->img.img_data[++i] = color;
 	}
 }
 

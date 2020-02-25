@@ -13,6 +13,8 @@ int     key_press (int keycode, void *param){
 	else if ((keycode >= KEY_Z && keycode <= KEY_C) ||
 			(keycode >= KEY_A && keycode <= KEY_D))
 		rotate(keycode, ll);
+	else if (keycode == KEY_PLUS || keycode == KEY_MINUS)
+		rise(keycode, ll);
 	else if (keycode == KEY_1)
 		choose_projection(ll, keycode);
 	return (0);
@@ -57,6 +59,22 @@ void    rotate(int key, t_fdf *fdf)
 		fdf->camera.gamma += 0.02;
 	else
 		fdf->camera.gamma -= 0.02;
+	dro(fdf);
+}
+
+void    rise(int key, t_fdf *fdf)
+{
+	if (key == KEY_PLUS)
+		if (fdf->camera.z_dev > 10)
+			fdf->camera.z_dev = 10;
+		else
+			fdf->camera.z_dev += 0.1;
+	else
+	{	if (fdf->camera.z_dev < 0.1)
+			fdf->camera.z_dev = 0.1;
+		else
+			fdf->camera.z_dev -= 0.1;
+	}
 	dro(fdf);
 }
 

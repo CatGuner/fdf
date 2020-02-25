@@ -21,6 +21,8 @@
 #define KEY_A       0
 #define KEY_S       1
 #define KEY_D       2
+#define KEY_PLUS    24
+#define KEY_MINUS   27
 
 
 #define ESC         53

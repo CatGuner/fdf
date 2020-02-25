@@ -32,7 +32,6 @@ typedef struct  s_im
 	int		    xcent;
 	int		    ycent;
 	void	    *img_ptr;
-	int		    color[3];
 	int         w_size;
 	int         h_size;
 	int		    alpha;
@@ -120,6 +119,6 @@ static void	rotate_y(int *x, int *z, double beta);
 static void	rotate_z(int *x, int *y, double gamma);
 void        move(int key, t_fdf *fdf);
 void        rotate(int key, t_fdf *fdf);
-
+void        rise(int key, t_fdf *fdf);
 
 #endif

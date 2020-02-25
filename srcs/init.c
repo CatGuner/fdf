@@ -15,9 +15,6 @@
 void InitImg(t_fdf* fdf)
 {
 	InitCamera(&fdf->camera);
-	fdf->img.color[0] = 255;
-	fdf->img.color[1] = 255;
-	fdf->img.color[2] = 255;
 	fdf->img.bit_per_pixel = 32;
 	fdf->img.size_line = 3200;
 	fdf->img.endian = 1;
