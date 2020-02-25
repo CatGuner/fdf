@@ -19,6 +19,7 @@
 #include "../libft/libft.h"
 #include <math.h>
 #include "get_next_line.h"
+#include "key_macros.h"
 
 typedef struct  s_flag
 {
@@ -43,12 +44,14 @@ typedef struct  s_im
 
 typedef struct s_camera
 {
-	t_flag projection; // iso = 1, 2d = 0;
+	t_flag      projection; // iso = 1, 2d = 0;
 	int         zoom;
 	double      alpha;
 	double      beta;
 	double      gamma;
 	float       z_dev;
+	int			x_offset;
+	int			y_offset;
 }               t_camera;
 
 typedef struct  s_map
@@ -103,13 +106,20 @@ int         **all_atoi(t_fdf *win);
 void		InitImg(t_fdf *fdf);
 static void	put_pixel(t_fdf *fdf, int x, int y, int color);
 void        dro(t_fdf* win);
-t_coords    get_couple_coords (int x, int y);
+t_coords    get_coords (int x, int y, t_fdf* fdf);
 static void clean_im(t_fdf *fdf, int c);
 int         key_press (int keycode, void *param);
 int         key_release (int keycode, t_fdf *param);
 void        zoom(int key, t_fdf *fdf);
 static void iso(int *x, int *y, int z);
 void        choose_projection(t_fdf *fdf, int key);
+void        InitCamera (t_camera* cam);
+t_coords    projection(t_coords c, t_fdf *fdf);
+static void	rotate_x(int *y, int *z, double alpha);
+static void	rotate_y(int *x, int *z, double beta);
+static void	rotate_z(int *x, int *y, double gamma);
+void        move(int key, t_fdf *fdf);
+void        rotate(int key, t_fdf *fdf);
 
 
 #endif

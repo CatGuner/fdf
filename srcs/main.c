@@ -26,7 +26,9 @@ int			main(int ac, char **av)
 		win1.map = NULL;
 		read_file(fd, &win1);
 		win1.length = set_length(win1.map);
-		win1.imap = all_atoi(&win1); //переводим карту в интовую матрицу
+		win1.imap = all_atoi(&win1);
+
+
 
 		win1.mlx_ptr = mlx_init();
 		win1.win_ptr = mlx_new_window(win1.mlx_ptr, 1920, 1080, "FDF");

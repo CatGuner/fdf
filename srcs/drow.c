@@ -9,8 +9,6 @@ static void	put_pixel(t_fdf *fdf, int x, int y, int color)
 	{
 		i = (x * fdf->img.bit_per_pixel / 8) + (y * fdf->img.size_line);
 		fdf->img.img_data[i] = color;
-		fdf->img.img_data[++i] = color;
-		fdf->img.img_data[++i] = color;
 	}
 }
 
@@ -47,12 +45,13 @@ void        dro_line (t_coords fst, t_coords snd, t_fdf* fdf)
 	}
 }
 
-t_coords    get_couple_coords (int x, int y)
+t_coords    get_coords(int x, int y, t_fdf* fdf)
 {
 	t_coords point;
 
 	point.x = x;
 	point.y = y;
+	point.z = fdf->imap[y][x];
 
 	return (point);
 }
@@ -64,16 +63,16 @@ void        dro(t_fdf* win)
 
 	y = 0;
 	clean_im(win, 0);
-	while (y < win->length)
+	while (y < win->width)
 	{
 		x = 0;
-		while (x < win->width)
+		while (x < win->length)
 		{
-			if (x != win->width - 1)
-				dro_line(get_couple_coords(x, y), get_couple_coords(x + 1, y), win);
+			if (x != win->length - 1)
+				dro_line(projection(get_coords(x, y, win), win), projection(get_coords(x + 1, y, win), win), win);
 
-			if (y != win->length - 1)
-				dro_line(get_couple_coords(x, y), get_couple_coords(x, y + 1), win);
+			if (y != win->width - 1)
+				dro_line(projection(get_coords(x, y, win), win), projection(get_coords(x, y + 1, win), win), win);
 			x++;
 		}
 		y++;

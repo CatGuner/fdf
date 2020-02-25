@@ -14,6 +14,7 @@
 
 void InitImg(t_fdf* fdf)
 {
+	InitCamera(&fdf->camera);
 	fdf->img.color[0] = 255;
 	fdf->img.color[1] = 255;
 	fdf->img.color[2] = 255;
@@ -22,10 +23,19 @@ void InitImg(t_fdf* fdf)
 	fdf->img.endian = 1;
 	fdf->img.w_size = 1920;
 	fdf->img.h_size = 1080;
-	fdf->camera.zoom = 20;
-	fdf->camera.projection.f = 0;
-	fdf->img.xcent = (1920 - fdf->camera.zoom * fdf->camera.zoom) / 2;
-	fdf->img.ycent = (1080 - fdf->camera.zoom * fdf->camera.zoom) / 2;
+	fdf->img.xcent = (1920 - fdf->camera.zoom * fdf->length) / 2;
+	fdf->img.ycent = (1080 - fdf->camera.zoom * fdf->width) / 2;
 	fdf->img.img_ptr = mlx_new_image(fdf->mlx_ptr, fdf->img.w_size, fdf->img.h_size);
 	fdf->img.img_data = mlx_get_data_addr(fdf->img.img_ptr, &fdf->img.bit_per_pixel, &fdf->img.size_line, &fdf->img.endian);
+}
+
+void InitCamera (t_camera* cam){
+	cam->zoom = 5;
+	cam->projection.f = 0;
+	cam->z_dev = 1;
+	cam->alpha = 0;
+	cam->beta = 0;
+	cam->gamma = 0;
+	cam->x_offset = 0;
+	cam->y_offset = 0;
 }
