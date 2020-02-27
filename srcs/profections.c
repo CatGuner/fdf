@@ -1,27 +1,39 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   profections.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: atammie <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/27 14:50:05 by atammie           #+#    #+#             */
+/*   Updated: 2020/02/27 15:50:52 by atammie          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/fdf.h"
 
-static void	rotate_x(int *y, int *z, double alpha)
+static void		rotate_x(int *y, int *z, double alpha)
 {
-	int previous_y;
+	int		previous_y;
 
 	previous_y = *y;
 	*y = previous_y * cos(alpha) + *z * sin(alpha);
 	*z = -previous_y * sin(alpha) + *z * cos(alpha);
 }
 
-static void	rotate_y(int *x, int *z, double beta)
+static void		rotate_y(int *x, int *z, double beta)
 {
-	int previous_x;
+	int		previous_x;
 
 	previous_x = *x;
 	*x = previous_x * cos(beta) + *z * sin(beta);
 	*z = -previous_x * sin(beta) + *z * cos(beta);
 }
 
-static void	rotate_z(int *x, int *y, double gamma)
+static void		rotate_z(int *x, int *y, double gamma)
 {
-	int previous_x;
-	int previous_y;
+	int		previous_x;
+	int		previous_y;
 
 	previous_x = *x;
 	previous_y = *y;
@@ -29,10 +41,10 @@ static void	rotate_z(int *x, int *y, double gamma)
 	*y = previous_x * sin(gamma) + previous_y * cos(gamma);
 }
 
-static void iso(int *x, int *y, int z)
+static void		iso(int *x, int *y, int z)
 {
-	int previous_x;
-	int previous_y;
+	int		previous_x;
+	int		previous_y;
 
 	previous_x = *x;
 	previous_y = *y;
@@ -40,7 +52,8 @@ static void iso(int *x, int *y, int z)
 	*y = -z + (previous_x + previous_y) * sin(0.523599);
 }
 
-t_coords projection(t_coords c, t_fdf *fdf){
+t_coords		projection(t_coords c, t_fdf *fdf)
+{
 	c.x = c.x * fdf->camera.zoom;
 	c.y = c.y * fdf->camera.zoom;
 	c.z = c.z * fdf->camera.zoom * fdf->camera.z_dev;
@@ -49,5 +62,7 @@ t_coords projection(t_coords c, t_fdf *fdf){
 	rotate_z(&c.x, &c.y, fdf->camera.gamma);
 	if (fdf->camera.projection.f)
 		iso(&c.x, &c.y, c.z);
+	c.x += fdf->img.xcent;
+	c.y += fdf->img.ycent;
 	return (c);
 }

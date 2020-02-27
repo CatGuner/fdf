@@ -1,5 +1,16 @@
-#include "../includes/fdf.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   key_controls.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: atammie <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/27 14:43:26 by atammie           #+#    #+#             */
+/*   Updated: 2020/02/27 14:45:01 by atammie          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "../includes/fdf.h"
 
 void	zoom(int key, t_fdf *fdf)
 {
@@ -12,7 +23,7 @@ void	zoom(int key, t_fdf *fdf)
 	draw(fdf);
 }
 
-void    move(int key, t_fdf *fdf)
+void	move(int key, t_fdf *fdf)
 {
 	if (key == ARROW_LEFT)
 		fdf->img.xcent -= 5;
@@ -25,7 +36,7 @@ void    move(int key, t_fdf *fdf)
 	draw(fdf);
 }
 
-void    rotate(int key, t_fdf *fdf)
+void	rotate(int key, t_fdf *fdf)
 {
 	if (key == KEY_Z)
 		fdf->camera.alpha -= 0.02;
@@ -42,7 +53,7 @@ void    rotate(int key, t_fdf *fdf)
 	draw(fdf);
 }
 
-void    rise(int key, t_fdf *fdf)
+void	rise(int key, t_fdf *fdf)
 {
 	if (key == KEY_PLUS)
 		if (fdf->camera.z_dev > 10)
@@ -50,7 +61,8 @@ void    rise(int key, t_fdf *fdf)
 		else
 			fdf->camera.z_dev += 0.1;
 	else
-	{	if (fdf->camera.z_dev < 0.1)
+	{
+		if (fdf->camera.z_dev < 0.1)
 			fdf->camera.z_dev = 0.1;
 		else
 			fdf->camera.z_dev -= 0.1;
@@ -58,7 +70,8 @@ void    rise(int key, t_fdf *fdf)
 	draw(fdf);
 }
 
-void    choose_projection(t_fdf *fdf, int key){
+void	choose_projection(t_fdf *fdf, int key)
+{
 	fdf->camera.alpha = 0;
 	fdf->camera.beta = 0;
 	fdf->camera.gamma = 0;

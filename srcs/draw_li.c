@@ -1,15 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw_li.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: atammie <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/27 14:10:18 by atammie           #+#    #+#             */
+/*   Updated: 2020/02/27 14:36:40 by atammie          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/fdf.h"
-#include "fdf.h"
 
-void    InitCoords (t_coords* fst, t_coords* snd, t_fdf* fdf)
-{
-	fst->x = fst->x * fdf->camera.zoom + fdf->img.xcent;
-	fst->y = fst->y * fdf->camera.zoom + fdf->img.ycent;
-	snd->x = snd->x * fdf->camera.zoom + fdf->img.xcent;
-	snd->y = snd->y * fdf->camera.zoom + fdf->img.ycent;
-}
-
-static void	put_pixel(t_fdf *fdf, int x, int y, int color)
+static void		put_pixel(t_fdf *fdf, int x, int y, int color)
 {
 	int		i;
 
@@ -22,14 +25,13 @@ static void	put_pixel(t_fdf *fdf, int x, int y, int color)
 	}
 }
 
-void        draw_line (t_coords fst, t_coords snd, t_fdf* fdf)
+void			draw_line(t_coords fst, t_coords snd, t_fdf *fdf)
 {
-	t_coords    delta;
-	t_coords    sign;
-	t_coords    cure;
-	int         error[2];
+	t_coords	delta;
+	t_coords	sign;
+	t_coords	cure;
+	int			error[2];
 
-	InitCoords(&fst, &snd, fdf);
 	delta.x = abs(fst.x - snd.x);
 	delta.y = abs(fst.y - snd.y);
 	sign.x = fst.x < snd.x ? 1 : -1;

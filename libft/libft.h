@@ -6,7 +6,7 @@
 /*   By: atammie <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 18:15:12 by atammie           #+#    #+#             */
-/*   Updated: 2019/09/20 16:52:06 by atammie          ###   ########.fr       */
+/*   Updated: 2020/02/27 17:58:28 by atammie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ typedef struct		s_list
 	struct s_list	*next;
 }					t_list;
 
-int                 get_next_line(const int fd, char **line);
-
+int					get_next_line(const int fd, char **line);
 
 void				ft_putchar(unsigned char c);
 void				ft_putstr(const char *str);
