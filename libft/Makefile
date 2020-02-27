@@ -20,7 +20,7 @@ NAME=libft.a
 all: $(NAME)
 
 $(NAME): $(OFILES)
-	ar rc $(NAME) $(OFILES)
+	@ar rc $(NAME) $(OFILES)
 	ranlib $(NAME)
 
 $(OFILES): %.o : %.c

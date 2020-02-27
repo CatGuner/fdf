@@ -12,9 +12,12 @@
 
 #include "../includes/fdf.h"
 
-void InitImg(t_fdf* fdf)
+void    InitImageAndCamera(t_fdf* fdf)
 {
 	InitCamera(&fdf->camera);
+	fdf->img.color[0] = 255;
+	fdf->img.color[1] = 255;
+	fdf->img.color[2] = 255;
 	fdf->img.bit_per_pixel = 32;
 	fdf->img.size_line = 3200;
 	fdf->img.endian = 1;
@@ -26,13 +29,13 @@ void InitImg(t_fdf* fdf)
 	fdf->img.img_data = mlx_get_data_addr(fdf->img.img_ptr, &fdf->img.bit_per_pixel, &fdf->img.size_line, &fdf->img.endian);
 }
 
-void InitCamera (t_camera* cam){
+void    InitCamera (t_camera* cam)
+{
 	cam->zoom = 5;
 	cam->projection.f = 0;
 	cam->z_dev = 1;
 	cam->alpha = 0;
 	cam->beta = 0;
 	cam->gamma = 0;
-	cam->x_offset = 0;
-	cam->y_offset = 0;
 }
+

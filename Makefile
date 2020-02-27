@@ -22,10 +22,12 @@ MLX_DIR	:= ./minilibx_macos
 SRC =   main.c \
         errors.c \
         rfile.c \
-        drow.c \
+        draw.c \
+        draw_li.c \
 		init.c \
 		key_controls.c \
-		profections.c
+		profections.c \
+		keys_hook.c
 
 
 OBJ		:= $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
@@ -48,10 +50,10 @@ $(NAME):
 	mkdir -p $(OBJ_DIR)
 	@$(MAKE) -C $(LIB_DIR)
 	@$(MAKE) $(OBJ)
-	gcc  $(OBJ) -L$(LIB_DIR) -lft -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit -I$(INC_DIR) -I$(LIB_DIR) -o $(NAME)
+	@gcc $(CFLAGS) $(OBJ) -L$(LIB_DIR) -lft -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit -I$(INC_DIR) -I$(LIB_DIR) -o $(NAME)
 
 $(OBJ_DIR)/%.o:$(SRC_DIR)/%.c
-	gcc  -I$(INC_DIR) -I$(LIB_DIR) -o $@ -c $<
+	@gcc  -I$(INC_DIR) -I$(LIB_DIR) -o $@ -c $<
 
 clean:
 	rm -rf $(OBJ_DIR)

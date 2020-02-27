@@ -32,6 +32,7 @@ typedef struct  s_im
 	int		    xcent;
 	int		    ycent;
 	void	    *img_ptr;
+	int         color[3];
 	int         w_size;
 	int         h_size;
 	int		    alpha;
@@ -53,16 +54,6 @@ typedef struct s_camera
 	int			y_offset;
 }               t_camera;
 
-typedef struct  s_map
-{
-	int			width;
-	int			height;
-	int			*coords_arr;
-	int			*colors_arr;
-	int			z_min;
-	int			z_max;
-	int			z_range;
-}               t_map;
 
 typedef struct	s_fdf
 {
@@ -92,7 +83,7 @@ typedef struct  s_size
 
 
 
-void        dro_line (t_coords fst, t_coords snd, t_fdf* fdf);
+void        draw_line (t_coords fst, t_coords snd, t_fdf* fdf);
 void        init_coords(t_coords *coords);
 int         line(int mouse, int x, int y, t_fdf *param);
 int         check_coords(t_coords *coords);
@@ -102,17 +93,18 @@ int			get_next_line(const int fd, char **line);
 int         set_length(char *str);
 void        read_file(int fd, t_fdf *win);
 int         **all_atoi(t_fdf *win);
-void		InitImg(t_fdf *fdf);
+void        InitImageAndCamera(t_fdf *fdf);
+void        InitCamera(t_camera* cam);
+void        InitCoords (t_coords* fst, t_coords* snd, t_fdf* fdf);
 static void	put_pixel(t_fdf *fdf, int x, int y, int color);
-void        dro(t_fdf* win);
-t_coords    get_coords (int x, int y, t_fdf* fdf);
-static void clean_im(t_fdf *fdf, int c);
+void        draw(t_fdf* win);
+t_coords    get_coords (int x, int y, int** imap);
+static void clean_im(t_fdf *fdf);
 int         key_press (int keycode, void *param);
 int         key_release (int keycode, t_fdf *param);
 void        zoom(int key, t_fdf *fdf);
 static void iso(int *x, int *y, int z);
 void        choose_projection(t_fdf *fdf, int key);
-void        InitCamera (t_camera* cam);
 t_coords    projection(t_coords c, t_fdf *fdf);
 static void	rotate_x(int *y, int *z, double alpha);
 static void	rotate_y(int *x, int *z, double beta);

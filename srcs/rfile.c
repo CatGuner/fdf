@@ -18,7 +18,6 @@ void        read_file(int fd, t_fdf *win)
 	char    *ptr;
 	char    *tmp;
 
-
 	tmp = ft_strnew(0);
 	win->width = 0;
 	while ((get_next_line(fd, &ptr)) > 0)

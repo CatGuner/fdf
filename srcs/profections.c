@@ -1,14 +1,5 @@
 #include "../includes/fdf.h"
 
-void    choose_projection(t_fdf *fdf, int key){
-	fdf->camera.alpha = 0;
-	fdf->camera.beta = 0;
-	fdf->camera.gamma = 0;
-	if (key == 18)
-		fdf->camera.projection.f++;
-	dro(fdf);
-}
-
 static void	rotate_x(int *y, int *z, double alpha)
 {
 	int previous_y;
@@ -48,7 +39,6 @@ static void iso(int *x, int *y, int z)
 	*x = (previous_x - previous_y) * cos(0.523599);
 	*y = -z + (previous_x + previous_y) * sin(0.523599);
 }
-
 
 t_coords projection(t_coords c, t_fdf *fdf){
 	c.x = c.x * fdf->camera.zoom;

@@ -27,13 +27,10 @@ int			main(int ac, char **av)
 		read_file(fd, &win1);
 		win1.length = set_length(win1.map);
 		win1.imap = all_atoi(&win1);
-
-
-
 		win1.mlx_ptr = mlx_init();
 		win1.win_ptr = mlx_new_window(win1.mlx_ptr, 1920, 1080, "FDF");
-		InitImg(&win1);
-		dro(&win1);
+		InitImageAndCamera(&win1);
+		draw(&win1);
 		setup_controls(&win1);
 		mlx_loop(win1.mlx_ptr);
 	}
